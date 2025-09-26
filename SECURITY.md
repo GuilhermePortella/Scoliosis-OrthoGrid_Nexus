@@ -10,12 +10,11 @@ Use esta seção para informar quais versões do projeto recebem atualizações 
 
 | Versão | Suportada?             |
 | ------ | ---------------------- |
-| 5.1.x  | ✅ (mantida)            |
-| 5.0.x  | ❌ (fim de vida)        |
-| 4.0.x  | ✅ (manutenção crítica) |
-| < 4.0  | ❌ (sem suporte)        |
+| 0.0.1  | ✅ (mantida)            |
+| 0.0.2  | ✅ (Em Desenvolvimento)        |
+| 0.0.3  | ✅ (Em Desenvolvimento) |
+| 0 0.0  | ❌ (sem suporte)        |
 
-> Atualize esta tabela sempre que lançar uma nova versão ou estender o suporte.
 
 ---
 
@@ -259,8 +258,6 @@ Se desejar, podemos creditar responsáveis por reports válidos (nome/handle) no
 - Se precisar enviar arquivos sensíveis, peça instruções para transferência segura via e-mail.
 
 ---
-
-*Arquivos sugeridos para adicionar ao repositório:* `SECURITY.md` (público), `pentest-report-template.md` (público), e um `SECURITY-PLAYBOOK.md` interno (não público) com procedimentos operacionais completos.
 
 *Fim do documento.*
 
