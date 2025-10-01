@@ -1,4 +1,62 @@
 @import "tailwindcss";
 
 /* seus estilos globais opcionais */
-html, body { min-height: 100%; }
+html, body {
+  min-height: 100%;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: local('Roboto');
+  ascent-override: 94.38%;
+  descent-override: 25.69%;
+  size-adjust: 95.36%;
+}
+
+:root{
+  --ink-700:#374151; --ink-800:#1f2937;
+  --link:#2563eb; --link-hover:#1d4ed8;
+  --accent:#f59e0b;
+}
+
+/* Container horizontal simples */
+.container{
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+.site-nav{
+  font: 400 15px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  color: var(--ink-700);
+  border-bottom: 1px solid #e5e7eb;
+  background: #fff;
+}
+.site-nav .inner{
+  display:flex; align-items:center; gap:24px;
+  height: 56px;
+}
+.site-brand{
+  font: 700 16px/1 Georgia,"Times New Roman",Times,serif;
+  color:#0f172a; text-decoration:none;
+}
+
+.site-links{ list-style:none; margin:0; padding:0; display:flex; gap:18px; flex-wrap:wrap; }
+.site-links a{
+  display:inline-block;
+  text-decoration:none;
+  color: var(--link);
+  padding: 2px 0;
+  border-bottom: 1px solid transparent;
+}
+.site-links a:hover{
+  color: var(--link-hover);
+  border-bottom-color: color-mix(in srgb, var(--link-hover) 40%, transparent);
+}
+.site-links a.active{
+  color: var(--link);
+  border-bottom: 2px solid var(--accent);
+}
+
+.sticky-top{ position: sticky; top: 0; z-index: 40; backdrop-filter: saturate(120%) blur(2px); }
