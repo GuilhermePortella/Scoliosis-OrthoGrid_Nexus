@@ -19,11 +19,7 @@ export async function POST(req: Request) {
     const recaptchaData = await recaptchaResponse.json();
 
     if (!recaptchaData.success || recaptchaData.score < 0.5) {
-      console.warn('[API] Falha na verificação do reCAPTCHA.', { 
-        success: recaptchaData.success,
-        score: recaptchaData.score,
-        errorCodes: recaptchaData['error-codes']
-      });
+      console.warn('[API] Falha na verificação do reCAPTCHA.', { score: recaptchaData.score, success: recaptchaData.success });
       return NextResponse.json({ ok: false, message: 'Falha na verificação do reCAPTCHA.' }, { status: 400 });
     }
     console.log('[API] reCAPTCHA verificado com sucesso.', { score: recaptchaData.score });
