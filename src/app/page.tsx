@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Home() {
   return (
     <main className="mx-auto max-w-5xl p-6 space-y-6">
@@ -7,22 +9,22 @@ export default function Home() {
       </p>
 
       <nav className="grid sm:grid-cols-2 gap-4">
-        <a href="/tecnico" className="rounded-2xl border p-4 hover:bg-gray-50">
+        <Link href="/tecnico" className="rounded-2xl border p-4 hover:bg-gray-50">
           <h2 className="text-xl font-medium">Informações técnicas</h2>
           <p className="text-sm opacity-70">Critérios, protocolos de imagem e referências.</p>
-        </a>
-        <a href="/medicos" className="rounded-2xl border p-4 hover:bg-gray-50">
+        </Link>
+        <Link href="/medicos" className="rounded-2xl border p-4 hover:bg-gray-50">
           <h2 className="text-xl font-medium">Médicos</h2>
           <p className="text-sm opacity-70">Especialistas e como indicar novos.</p>
-        </a>
-        <a href="/indicar-medico" className="rounded-2xl border p-4 hover:bg-gray-50">
+        </Link>
+        <Link href="/indicar-medico" className="rounded-2xl border p-4 hover:bg-gray-50">
           <h2 className="text-xl font-medium">Indicar médico</h2>
           <p className="text-sm opacity-70">Formulário simples (envio para API).</p>
-        </a>
-        <a href="/estudos_Caso" className="rounded-2xl border p-4 hover:bg-gray-50">
+        </Link>
+        <Link href="/estudos_Caso" className="rounded-2xl border p-4 hover:bg-gray-50">
           <h2 className="text-xl font-medium">Diagnósticos e Estudo de Caso</h2>
           <p className="text-sm opacity-70">Exemplos práticos e discussões de casos.</p>
-        </a>
+        </Link>
       </nav>
     </main>
   )
