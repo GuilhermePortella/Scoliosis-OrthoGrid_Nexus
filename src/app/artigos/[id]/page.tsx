@@ -12,7 +12,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   let article;
   try {
     article = await getArticleData(params.id);
-  } catch (error) {
+  } catch (_error) {
     notFound();
   }
 

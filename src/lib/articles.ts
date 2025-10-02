@@ -22,7 +22,6 @@ export interface ArticleData {
   summary: string;
   author: string;
   publishedDate: string;
-  [key: string]: any;
 }
 
 export function getSortedArticlesData(): ArticleData[] {
