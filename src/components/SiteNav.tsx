@@ -6,6 +6,7 @@ const LINKS = [
   { href: "/", label: "Início" },
   { href: "/medicos", label: "Médicos" },
   { href: "/estudos_Caso", label: "Estudos de Caso" },
+  { href: "/artigos", label: "Artigos" },
   { href: "/indicar-medico", label: "Indicar médico" },
   { href: "/tecnico", label: "Técnico" },
 ];
