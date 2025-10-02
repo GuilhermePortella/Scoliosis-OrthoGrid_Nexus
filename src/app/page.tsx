@@ -19,6 +19,10 @@ export default function Home() {
           <h2 className="text-xl font-medium">Indicar médico</h2>
           <p className="text-sm opacity-70">Formulário simples (envio para API).</p>
         </a>
+        <a href="/estudos_Caso" className="rounded-2xl border p-4 hover:bg-gray-50">
+          <h2 className="text-xl font-medium">Diagnósticos e Estudo de Caso</h2>
+          <p className="text-sm opacity-70">Exemplos práticos e discussões de casos.</p>
+        </a>
       </nav>
     </main>
   )

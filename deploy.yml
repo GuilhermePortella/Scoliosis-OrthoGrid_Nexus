@@ -1,0 +1,38 @@
+name: Deploy to GitHub Pages
+
+on:
+  # Executa ao fazer push para a branch `main`
+  push:
+    branches: [main]
+  # Permite executar este workflow manualmente pela aba Actions do GitHub
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18' # Usa a versão 18 do Node.js
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./out # O Next.js gera os arquivos estáticos na pasta 'out'
