@@ -1,8 +1,17 @@
 import { NextResponse } from 'next/server'
 import nodemailer from 'nodemailer'
 
+// 🔹 Força runtime Node.js (necessário para nodemailer)
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
+
+// 🔹 Tipagem esperada da resposta do Google reCAPTCHA
+type RecaptchaResponse = {
+  success: boolean;
+  score?: number;
+  action?: string;
+  'error-codes'?: string[];
+};
 
 export async function POST(req: Request) {
   console.log('[API] Recebida nova requisição de indicação de médico.');
@@ -15,53 +24,52 @@ export async function POST(req: Request) {
       return NextResponse.json({ ok: false, message: 'Token reCAPTCHA ausente.' }, { status: 400 });
     }
 
-    // 1) Verificação do reCAPTCHA
     const secret = process.env.RECAPTCHA_SECRET_KEY;
     if (!secret) {
       console.error('[API] RECAPTCHA_SECRET_KEY não configurada');
       return NextResponse.json({ ok: false, message: 'Configuração do reCAPTCHA ausente.' }, { status: 500 });
     }
 
+    // 🔹 Validação do token com Google
     console.log('[API] Verificando reCAPTCHA...');
     const params = new URLSearchParams({
       secret,
       response: token,
-      // remoteip: opcional — pode enviar IP do cliente se desejar
     });
 
     const gRes = await fetch('https://www.google.com/recaptcha/api/siteverify', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, // <- CORRETO
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: params.toString(),
       cache: 'no-store',
     });
 
-    const gJson: any = await gRes.json();
-    // Log de diagnóstico (sanitizado)
+    const gJson: RecaptchaResponse = await gRes.json();
     console.log('[API] reCAPTCHA resp:', {
-      success: gJson?.success,
-      score: gJson?.score,
-      action: gJson?.action,
-      'error-codes': gJson?.['error-codes'],
+      success: gJson.success,
+      score: gJson.score,
+      action: gJson.action,
+      'error-codes': gJson['error-codes'],
     });
 
-    // Se for v3, score é número; se for v2, não existe score.
+    // 🔹 Se for v3 valida score; se for v2, só valida success
     const success = !!gJson?.success;
-    const scoreOk = typeof gJson?.score === 'number' ? gJson.score >= 0.5 : true; // v2 não tem score
+    const scoreOk = typeof gJson?.score === 'number' ? gJson.score >= 0.5 : true;
 
     if (!success || !scoreOk) {
+      console.warn('[API] Falha na verificação do reCAPTCHA.');
       return NextResponse.json(
-        { ok: false, message: 'Falha na verificação do reCAPTCHA.', details: gJson?.['error-codes'] ?? null },
+        { ok: false, message: 'Falha na verificação do reCAPTCHA.', details: gJson['error-codes'] ?? null },
         { status: 400 }
       );
     }
 
-    // 2) Envio de e-mail
+    // 🔹 Configuração do transporte SMTP
     const port = Number(process.env.SMTP_PORT ?? 0);
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
       port,
-      secure: port === 465, // TLS implícito
+      secure: port === 465,
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
