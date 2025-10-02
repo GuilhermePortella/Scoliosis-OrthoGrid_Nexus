@@ -6,7 +6,6 @@ import { GoogleReCaptchaProvider, useGoogleReCaptcha } from 'react-google-recapt
 //reCAPTCHA
 function IndicarMedicoForm() {
   const { executeRecaptcha } = useGoogleReCaptcha()
-  console.log('[Debug] executeRecaptcha available:', !!executeRecaptcha);
   const [status, setStatus] = useState<'idle' | 'ok' | 'err' | 'loading'>('idle')
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -26,9 +25,7 @@ function IndicarMedicoForm() {
       return;
     }
 
-    console.log('[Debug] Executing reCAPTCHA...');
     const token = await executeRecaptcha('doctor_application');
-    console.log('[Debug] reCAPTCHA token:', token);
 
     const form = new FormData(formRef.current)
     const payload = Object.fromEntries(form.entries())
@@ -98,7 +95,6 @@ function IndicarMedicoForm() {
 // Componente principal da página que fornece o contexto do reCAPTCHA
 export default function IndicarMedicoPage() {
   const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-  console.log('[Debug] NEXT_PUBLIC_RECAPTCHA_SITE_KEY:', siteKey);
 
   if (!siteKey) {
     return (
