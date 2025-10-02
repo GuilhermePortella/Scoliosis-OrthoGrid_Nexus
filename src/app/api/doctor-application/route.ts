@@ -6,6 +6,7 @@ export async function POST(req: Request) {
   try {
     const data = await req.json()
     const { token, ...formData } = data;
+    console.log('[API] Token recebido no backend:', token);
     console.log('[API] Dados recebidos:', { fullName: formData.fullName, crm: formData.crm });
 
     // 1. Verificação do token do reCAPTCHA
