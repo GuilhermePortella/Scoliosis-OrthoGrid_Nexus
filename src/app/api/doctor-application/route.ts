@@ -4,20 +4,20 @@ import nodemailer from 'nodemailer'
 export async function POST(req: Request) {
   try {
     const data = await req.json()
-    const { token, ...formData } = data;
+    const formData = data;
 
     // 1. Verificação do token do reCAPTCHA
-    const recaptchaSecret = process.env.RECAPTCHA_SECRET_KEY;
-    const recaptchaResponse = await fetch('https://www.google.com/recaptcha/api/siteverify', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: `secret=${recaptchaSecret}&response=${token}`
-    });
-    const recaptchaData = await recaptchaResponse.json();
+    // const recaptchaSecret = process.env.RECAPTCHA_SECRET_KEY;
+    // const recaptchaResponse = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/x-form-urlencoded' },
+    //   body: `secret=${recaptchaSecret}&response=${token}`
+    // });
+    // const recaptchaData = await recaptchaResponse.json();
 
-    if (!recaptchaData.success || recaptchaData.score < 0.5) {
-      return NextResponse.json({ ok: false, message: 'Falha na verificação do reCAPTCHA.' }, { status: 400 });
-    }
+    // if (!recaptchaData.success || recaptchaData.score < 0.5) {
+    //   return NextResponse.json({ ok: false, message: 'Falha na verificação do reCAPTCHA.' }, { status: 400 });
+    // }
 
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
@@ -31,7 +31,7 @@ export async function POST(req: Request) {
 
     const emailHtml = `
       <h1>Nova Indicação de Médico</h1>
-      <p>Um novo médico foi indicado através do site (Pontuação reCAPTCHA: ${recaptchaData.score.toFixed(2)}).</p>
+      <p>Um novo médico foi indicado através do site (reCAPTCHA temporariamente desabilitado para teste).</p>
       <ul>
         <li><strong>Nome Completo:</strong> ${formData.fullName}</li>
         <li><strong>CRM:</strong> ${formData.crm}</li>
