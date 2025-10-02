@@ -19,6 +19,12 @@ export async function POST(req: Request) {
     const data = await req.json();
     const { token, ...formData } = data ?? {};
 
+    console.log('[Debug] reCAPTCHA token:', token);
+    console.log('[Debug]');
+    console.log('[API] Token recebido no backend:', token);
+
+
+
     if (!token || typeof token !== 'string') {
       console.warn('[API] Token reCAPTCHA ausente/ inválido');
       return NextResponse.json({ ok: false, message: 'Token reCAPTCHA ausente.' }, { status: 400 });
