@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "katex/dist/katex.min.css";
 
 /* ------------------------------
    Base tipográfica e fontes
@@ -149,3 +150,9 @@ html, body {
 h1, h2, h3, h4 {
   text-wrap: balance;
 }
+/* Harmoniza KaTeX com tipografia do artigo */
+.prose .katex-display {
+  margin: 1.25rem 0 1.25rem 0; /* respiro */
+}
+.prose .katex { font-size: 1.02em; }         /* levemente maior */
+.prose .katex .mspace { margin-right: .1em; }/* pequenos ajustes de espaçamento */

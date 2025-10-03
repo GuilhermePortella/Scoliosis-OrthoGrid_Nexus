@@ -7,12 +7,14 @@ import { unified } from 'unified';
 import remarkParse from 'remark-parse';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
+import remarkMath from 'remark-math';
 import remarkRehype from 'remark-rehype';
 import rehypeRaw from 'rehype-raw';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import rehypeKatex from 'rehype-katex';
 import rehypeStringify from 'rehype-stringify';
-import rehypeSanitize from 'rehype-sanitize';
+import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 
 const articlesDirectory = path.join(process.cwd(), 'content/articles');
 
@@ -57,27 +59,50 @@ export async function getArticleData(
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const matterResult = matter(fileContents);
 
-  // Markdown -> (remark) -> Rehype -> HTML
-  // - GFM: tabelas, listas de tarefas, etc.
-  // - Breaks: quebra de linha suave para “parágrafos arejados”
-  // - Raw: permite HTML do próprio .md (controlado)
-  // - Sanitize: camada de segurança (pode ajustar a schema se usar iframes etc.)
+  // -------- Sanitize schema ajustado p/ KaTeX --------
+  const katexSchema: any = structuredClone(defaultSchema);
+
+  // Permitir classes que o KaTeX injeta em <span> e <div>
+  katexSchema.attributes = {
+    ...katexSchema.attributes,
+    span: [
+      ...(katexSchema.attributes?.span || []),
+      ['className', 'katex'],
+      ['className', 'katex-display'],
+      ['className', 'katex-html'],
+      ['className', 'mord'],
+      ['className', 'mspace'],
+      ['className', 'mbin'],
+      ['className', 'mrel'],
+      ['className', 'mop'],
+      ['className', 'mord+rule'], // algumas composições comuns
+    ],
+    div: [
+      ...(katexSchema.attributes?.div || []),
+      ['className', 'katex'],
+      ['className', 'katex-display'],
+      ['className', 'katex-html'],
+    ],
+    // Permitir atributos style mínimos (opcional; normalmente KaTeX não precisa)
+    // style pode ser removido se você preferir política mais restritiva
+  };
+
+  // -------- Pipeline Markdown -> HTML --------
   const processed = await unified()
     .use(remarkParse)
-    .use(remarkGfm)
-    .use(remarkBreaks)
+    .use(remarkGfm)          // tabelas, listas de tarefa, etc.
+    .use(remarkBreaks)       // quebra de linha suave
+    .use(remarkMath)         // suporte a $...$ e $$...$$
     .use(remarkRehype, { allowDangerousHtml: true })
-    .use(rehypeRaw) // processa HTML embutido no markdown
-    .use(rehypeSlug)
+    .use(rehypeRaw)          // processar HTML embutido no .md
+    .use(rehypeSlug)         // slugs nos headings
     .use(rehypeAutolinkHeadings, {
       behavior: 'append',
       properties: { className: ['heading-anchor'], ariaLabel: 'Link para esta seção' },
-      content: {
-        type: 'text',
-        value: '#',
-      },
+      content: { type: 'text', value: '#' },
     })
-    .use(rehypeSanitize) // mantenha se o conteúdo vier de autores não confiáveis
+    .use(rehypeKatex)        // render LaTeX -> HTML/CSS
+    .use(rehypeSanitize, katexSchema) // sanitização com KaTeX liberado
     .use(rehypeStringify)
     .process(matterResult.content);
 
