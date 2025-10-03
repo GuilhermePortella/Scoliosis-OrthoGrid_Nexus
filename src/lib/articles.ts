@@ -2,17 +2,18 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
-// unified/remark/rehype toolchain
 import { unified } from 'unified';
 import remarkParse from 'remark-parse';
 import remarkGfm from 'remark-gfm';
 import remarkBreaks from 'remark-breaks';
+import remarkMath from 'remark-math';
 import remarkRehype from 'remark-rehype';
 import rehypeRaw from 'rehype-raw';
 import rehypeSlug from 'rehype-slug';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import rehypeKatex from 'rehype-katex';
 import rehypeStringify from 'rehype-stringify';
-import rehypeSanitize from 'rehype-sanitize';
+import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 
 const articlesDirectory = path.join(process.cwd(), 'content/articles');
 
@@ -57,27 +58,45 @@ export async function getArticleData(
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const matterResult = matter(fileContents);
 
-  // Markdown -> (remark) -> Rehype -> HTML
-  // - GFM: tabelas, listas de tarefas, etc.
-  // - Breaks: quebra de linha suave para “parágrafos arejados”
-  // - Raw: permite HTML do próprio .md (controlado)
-  // - Sanitize: camada de segurança (pode ajustar a schema se usar iframes etc.)
+  const katexSchema: typeof defaultSchema = structuredClone(defaultSchema);
+
+  katexSchema.attributes = {
+    ...katexSchema.attributes,
+    span: [
+      ...(katexSchema.attributes?.span || []),
+      ['className', 'katex'],
+      ['className', 'katex-display'],
+      ['className', 'katex-html'],
+      ['className', 'mord'],
+      ['className', 'mspace'],
+      ['className', 'mbin'],
+      ['className', 'mrel'],
+      ['className', 'mop'],
+      ['className', 'mord+rule'],
+    ],
+    div: [
+      ...(katexSchema.attributes?.div || []),
+      ['className', 'katex'],
+      ['className', 'katex-display'],
+      ['className', 'katex-html'],
+    ],
+  };
+
   const processed = await unified()
     .use(remarkParse)
     .use(remarkGfm)
     .use(remarkBreaks)
+    .use(remarkMath)
     .use(remarkRehype, { allowDangerousHtml: true })
-    .use(rehypeRaw) // processa HTML embutido no markdown
+    .use(rehypeRaw)
     .use(rehypeSlug)
     .use(rehypeAutolinkHeadings, {
       behavior: 'append',
       properties: { className: ['heading-anchor'], ariaLabel: 'Link para esta seção' },
-      content: {
-        type: 'text',
-        value: '#',
-      },
+      content: { type: 'text', value: '#' },
     })
-    .use(rehypeSanitize) // mantenha se o conteúdo vier de autores não confiáveis
+    .use(rehypeKatex)
+    .use(rehypeSanitize, katexSchema) 
     .use(rehypeStringify)
     .process(matterResult.content);
 
