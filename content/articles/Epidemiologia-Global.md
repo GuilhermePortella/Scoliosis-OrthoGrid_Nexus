@@ -15,7 +15,7 @@ O estudo epidemiológico da NF1 é fundamental para dimensionar seu impacto glob
 
 ## Estimativas recentes de prevalência e incidência
 
-### 📊 Estimativas recentes de prevalência e incidência
+### Estimativas recentes de prevalência e incidência
 
 - **Estudo (2023):** prevalência de 1 em 3.190 → revisão sistemática/meta-análise ([PMC][1]).
 - **Revisão:** 1 em 3.000–4.000 globalmente → faixa mais citada ([PMC][2]).
@@ -26,7 +26,7 @@ O estudo epidemiológico da NF1 é fundamental para dimensionar seu impacto glob
 - **SciELO (Pinar et al.):** 1 em 3.000 com variações regionais ([SciELO][7]).
 ---
 
-## 🧮 Estimativa global
+## Estimativa global
 
 Considerando a prevalência média de **1 em 3.000** e a população mundial de **~8 bilhões**:
 
@@ -34,7 +34,7 @@ Considerando a prevalência média de **1 em 3.000** e a população mundial de 
 
 Portanto, estima-se que existam **entre 2,5 e 3 milhões** de pessoas com NF1 no mundo.
 
-> ⚠️ Essa estimativa deve ser interpretada com cautela porque:
+> - Essa estimativa deve ser interpretada com cautela porque:
 > - Muitos casos leves podem não ser diagnosticados.
 > - Há subnotificação em regiões com menor acesso a especialistas.
 > - Diferenças locais refletem, em parte, qualidade de diagnóstico e registro.
@@ -42,7 +42,7 @@ Portanto, estima-se que existam **entre 2,5 e 3 milhões** de pessoas com NF1 no
 
 Portanto, estima-se que existam atualmente **entre 2,5 e 3 milhões de pessoas com NF1 no mundo**.  
 
-⚠️ Essa estimativa deve ser interpretada com cautela, pois:  
+- Essa estimativa deve ser interpretada com cautela, pois:  
 - Muitos casos leves ou subclínicos podem não ser diagnosticados.  
 - Diferenças regionais no acesso a especialistas e nos registros epidemiológicos podem levar à subnotificação.  
 - A prevalência pode variar localmente mais por **qualidade de diagnóstico** do que por diferenças genéticas reais.  
