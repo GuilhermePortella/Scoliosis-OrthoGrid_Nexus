@@ -60,7 +60,7 @@ export async function getArticleData(
   const matterResult = matter(fileContents);
 
   // -------- Sanitize schema ajustado p/ KaTeX --------
-  const katexSchema: any = structuredClone(defaultSchema);
+  const katexSchema: typeof defaultSchema = structuredClone(defaultSchema);
 
   // Permitir classes que o KaTeX injeta em <span> e <div>
   katexSchema.attributes = {
