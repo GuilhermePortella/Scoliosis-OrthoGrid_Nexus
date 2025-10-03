@@ -1,12 +1,10 @@
 @import "tailwindcss";
+@import "katex/dist/katex.min.css";
 
-/* ------------------------------
-   Base tipográfica e fontes
----------------------------------*/
 html, body {
   min-height: 100%;
   font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
-  color: #111827; /* gray-900 para títulos padrão */
+  color: #111827; 
   background: #ffffff;
 }
 
@@ -18,23 +16,18 @@ html, body {
   size-adjust: 95.36%;
 }
 
-/* Paleta de apoio (mantida) */
 :root{
   --ink-700:#374151; --ink-800:#1f2937;
   --link:#2563eb; --link-hover:#1d4ed8;
   --accent:#f59e0b;
 }
 
-/* Container horizontal simples */
 .container{
   max-width: 1200px;
   margin-inline: auto;
   padding-inline: 24px;
 }
 
-/* ------------------------------
-   Navegação do site
----------------------------------*/
 .site-nav{
   font: 400 15px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   color: var(--ink-700);
@@ -69,39 +62,32 @@ html, body {
 
 .sticky-top{ position: sticky; top: 0; z-index: 40; backdrop-filter: saturate(120%) blur(2px); }
 
-/* ------------------------------
-   Tipografia dos artigos (.prose)
-   – aparência de “revista científica”
----------------------------------*/
 .prose {
-  /* Ancoragem gentil ao clicar em heading com slug */
   scroll-margin-top: 96px;
-  /* Cores via Tailwind Typography já definidas no config,
-     mas reforçamos visual consistente aqui também */
-  --tw-prose-body: #374151;        /* gray-700 */
-  --tw-prose-headings: #111827;    /* gray-900 */
-  --tw-prose-links: #1d4ed8;       /* blue-700 */
+  --tw-prose-body: #374151;        
+  --tw-prose-headings: #111827;    
+  --tw-prose-links: #1d4ed8;       
   --tw-prose-bold: #111827;
   --tw-prose-hr: #e5e7eb;
 }
 
 .prose p {
-  line-height: 1.9;         /* respiro entre linhas */
-  margin-bottom: 1.1em;      /* espaçamento consistente */
+  line-height: 1.9;         
+  margin-bottom: 1.1em;     
 }
 
 .prose h1,
 .prose h2,
 .prose h3 {
   line-height: 1.25;
-  scroll-margin-top: 96px;   /* para navegação por âncora */
+  scroll-margin-top: 96px;   
 }
 
 .prose h2 {
   margin-top: 2.5rem;
   margin-bottom: 1rem;
   padding-bottom: 0.25rem;
-  border-bottom: 1px solid #d1d5db; /* gray-300 */
+  border-bottom: 1px solid #d1d5db; 
   font-weight: 600;
   color: #111827;
 }
@@ -125,7 +111,6 @@ html, body {
 
 .prose hr { margin: 2rem 0; border-color: #e5e7eb; }
 
-/* Anchors (geradas por rehype-autolink-headings) */
 .prose .heading-anchor {
   opacity: 0.0;
   margin-left: .25rem;
@@ -137,15 +122,16 @@ html, body {
   opacity: 0.8;
 }
 
-/* ------------------------------
-   Lista de artigos (index /artigos)
-   – mantém leitura agradável nos cards
----------------------------------*/
 .article-list p {
   line-height: 1.75;
 }
 
-/* Evita títulos quebrando de forma feia (balanceia linhas) */
 h1, h2, h3, h4 {
   text-wrap: balance;
 }
+
+.prose .katex-display {
+  margin: 1.25rem 0 1.25rem 0; 
+}
+.prose .katex { font-size: 1.02em; }
+.prose .katex .mspace { margin-right: .1em; }
