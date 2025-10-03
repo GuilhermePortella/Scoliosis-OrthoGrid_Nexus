@@ -2,7 +2,6 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
-// unified/remark/rehype toolchain
 import { unified } from 'unified';
 import remarkParse from 'remark-parse';
 import remarkGfm from 'remark-gfm';
@@ -59,10 +58,8 @@ export async function getArticleData(
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const matterResult = matter(fileContents);
 
-  // -------- Sanitize schema ajustado p/ KaTeX --------
   const katexSchema: typeof defaultSchema = structuredClone(defaultSchema);
 
-  // Permitir classes que o KaTeX injeta em <span> e <div>
   katexSchema.attributes = {
     ...katexSchema.attributes,
     span: [
@@ -75,7 +72,7 @@ export async function getArticleData(
       ['className', 'mbin'],
       ['className', 'mrel'],
       ['className', 'mop'],
-      ['className', 'mord+rule'], // algumas composições comuns
+      ['className', 'mord+rule'],
     ],
     div: [
       ...(katexSchema.attributes?.div || []),
@@ -83,26 +80,23 @@ export async function getArticleData(
       ['className', 'katex-display'],
       ['className', 'katex-html'],
     ],
-    // Permitir atributos style mínimos (opcional; normalmente KaTeX não precisa)
-    // style pode ser removido se você preferir política mais restritiva
   };
 
-  // -------- Pipeline Markdown -> HTML --------
   const processed = await unified()
     .use(remarkParse)
-    .use(remarkGfm)          // tabelas, listas de tarefa, etc.
-    .use(remarkBreaks)       // quebra de linha suave
-    .use(remarkMath)         // suporte a $...$ e $$...$$
+    .use(remarkGfm)
+    .use(remarkBreaks)
+    .use(remarkMath)
     .use(remarkRehype, { allowDangerousHtml: true })
-    .use(rehypeRaw)          // processar HTML embutido no .md
-    .use(rehypeSlug)         // slugs nos headings
+    .use(rehypeRaw)
+    .use(rehypeSlug)
     .use(rehypeAutolinkHeadings, {
       behavior: 'append',
       properties: { className: ['heading-anchor'], ariaLabel: 'Link para esta seção' },
       content: { type: 'text', value: '#' },
     })
-    .use(rehypeKatex)        // render LaTeX -> HTML/CSS
-    .use(rehypeSanitize, katexSchema) // sanitização com KaTeX liberado
+    .use(rehypeKatex)
+    .use(rehypeSanitize, katexSchema) 
     .use(rehypeStringify)
     .process(matterResult.content);
 
