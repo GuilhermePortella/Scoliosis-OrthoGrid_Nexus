@@ -25,6 +25,6 @@ export const caseStudies: CaseStudy[] = [
   // Novos casos serão adicionados aqui
 ];
 
-export const getCaseStudyById = (id: string): CaseStudy | undefined => {
+export const getCaseStudyById = async (id: string): Promise<CaseStudy | undefined> => {
   return caseStudies.find((study) => study.id === id);
 };

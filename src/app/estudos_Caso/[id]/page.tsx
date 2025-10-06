@@ -9,8 +9,12 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function CaseStudyPage({ params }: { params: { id: string } }) {
-  const study = getCaseStudyById(params.id);
+export default async function CaseStudyPage({ params }: { params: { id: string } }) {
+  // `params` may be a promise in the Next.js app router environment.
+  // Await it before accessing properties to avoid the runtime error:
+  // "params should be awaited before using its properties"
+  const { id } = await params;
+  const study = await getCaseStudyById(id);
 
   if (!study) {
     notFound();
@@ -19,20 +23,18 @@ export default function CaseStudyPage({ params }: { params: { id: string } }) {
   const StudyComponent = study.component;
 
   return (
-    <main className="mx-auto max-w-3xl p-6">
-      <article>
-        <div
-          className="prose prose-neutral lg:prose-xl max-w-none"
-        >
-           <StudyComponent />
-        </div>
+    <>
+      {/* Render the case-study component directly so it controls its own layout
+          (it already uses mx-auto max-w-4xl p-6). Avoid wrapping it with a
+          constrained container that would override its styles. */}
+      <StudyComponent />
 
-        <div className="mt-12 border-t pt-6">
-          <Link href="/estudos_Caso" className="text-blue-600 hover:underline">
-            &larr; Voltar para todos os casos
-          </Link>
-        </div>
-      </article>
-    </main>
+      {/* Navigation block kept separate and constrained to site width. */}
+      <div className="mx-auto max-w-3xl p-6 mt-6 border-t pt-6">
+        <Link href="/estudos_Caso" className="text-blue-600 hover:underline">
+          &larr; Voltar para todos os casos
+        </Link>
+      </div>
+    </>
   );
 }
