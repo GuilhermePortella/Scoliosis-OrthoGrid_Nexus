@@ -9,12 +9,9 @@ interface ArticlePageProps {
 }
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
-  // Await params because in the Next.js App Router `params` can be a promise.
-  const { id } = await params;
-
   let article;
   try {
-    article = await getArticleData(id);
+    article = await getArticleData(params.id);
   } catch (_error) {
     notFound();
   }
