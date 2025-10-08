@@ -1,7 +1,7 @@
 ---
 title: 'Critérios de Diagnóstico Clínico para Neurofibromatose Tipo 1 (NF1)'
 summary: 'Revisão dos critérios clínicos estabelecidos pelo National Institutes of Health (NIH) para o diagnóstico de NF1, correlacionando-os com aspectos genéticos, manifestações clínicas e implicações prognósticas.'
-author: 'Dra. Carolina Furtado'
+author: 'Equipe NF1 Study Hub'
 publishedDate: '2025-10-01'
 ---
 

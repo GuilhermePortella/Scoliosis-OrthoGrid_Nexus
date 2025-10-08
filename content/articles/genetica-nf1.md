@@ -1,7 +1,7 @@
 ---
 title: 'A Genética por Trás da Neurofibromatose Tipo 1'
 summary: 'Análise aprofundada sobre o gene NF1, suas mutações, mecanismos moleculares e implicações no diagnóstico genético. Discutimos como alterações estruturais e funcionais impactam a expressão clínica da doença.'
-author: 'Dr. Ricardo Almeida'
+author: 'Equipe NF1 Study Hub'
 publishedDate: '2025-09-15'
 ---
 
