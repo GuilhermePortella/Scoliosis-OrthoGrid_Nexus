@@ -1,7 +1,7 @@
 ---
 title: 'O Manejo Multidisciplinar de Pacientes com NF1'
 summary: 'A relevância de uma abordagem coordenada envolvendo neurologistas, dermatologistas, oftalmologistas e outros especialistas no acompanhamento e tratamento de pacientes com NF1.'
-author: 'Dr. Fernando Bastos'
+author: 'Equipe NF1 Study Hub'
 publishedDate: '2025-08-20'
 ---
 

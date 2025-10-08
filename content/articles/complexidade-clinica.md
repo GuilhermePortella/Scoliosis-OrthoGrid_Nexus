@@ -1,7 +1,7 @@
 ---
 title: 'NF1: Raridade, Complexidade Clínica e Perspectivas de Tratamento'
 summary: 'Uma revisão sobre a raridade epidemiológica da Neurofibromatose Tipo 1, os desafios clínicos decorrentes de sua complexidade, a história de sua descoberta e as opções terapêuticas atualmente disponíveis.'
-author: 'Dr. Mariana Lopes'
+author: 'Equipe NF1 Study Hub'
 publishedDate: '2025-07-05'
 ---
 
