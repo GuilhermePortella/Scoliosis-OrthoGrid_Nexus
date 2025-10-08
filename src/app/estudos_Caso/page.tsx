@@ -6,7 +6,7 @@ export default function EstudosDeCasoPage() {
           Estudo de Caso: Neurofibromatose Tipo 1 com Escoliose Distrófica
           Grave, Neurofibromas Plexiformes e Repercussão Funcional Respiratória
         </h1>
-      </header>
+      </header> 
 
       {/* Sugestão: Adicionar uma imagem de capa representativa do caso clínico aqui. Ex: uma composição de imagens de RM da coluna e do tórax. */}
 
